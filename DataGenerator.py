@@ -378,7 +378,7 @@ class Record:
 def main():
     
     properties = Properties()
-    properties_file_path = "/PyDataGenerator.properties"
+    properties_file_path = "PyDataGenerator.properties"
     if properties_file_path.startswith('~'):
         properties_file_path = os.path.expanduser(properties_file_path)
     properties.load(open(properties_file_path))
