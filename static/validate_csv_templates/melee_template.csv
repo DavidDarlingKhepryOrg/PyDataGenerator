@@ -1,0 +1,2 @@
+﻿mother_stone_id,date_of_receipt_at_cutter,date_of_shipping_from_cutter,cutter_code,cutter_location_code,gem_producer,production_location,inventory_id,package_date,packet_carat_wt,packet_count,packet_tracking_number
+112233,2022-02-15,2022-02-20,Self,SCS_California,ex,SCS_California,EX123456,2022-02-26,0.81,50,765432

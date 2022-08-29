@@ -378,7 +378,7 @@ class Record:
 def main():
     
     properties = Properties()
-    properties_file_path = "~/PycharmProjects/PyDataGenerator/PyDataGenerator.properties"
+    properties_file_path = "/PyDataGenerator.properties"
     if properties_file_path.startswith('~'):
         properties_file_path = os.path.expanduser(properties_file_path)
     properties.load(open(properties_file_path))
@@ -423,7 +423,11 @@ def main():
 
         for i in range(0, maxRows):
             rows += 1
-            
+
+            # TODO: Tweak static/validate_csv_templates as needed
+            # TODO: Soft-code the following "record" using a YAML file
+            # TODO: Convert PyDataGenerator.properties to ENV file
+
             record = Record()
             record.addField("UUID4", "UUID4").random()
             record.addField("Alpha", "Alpha").random(20, 25)
