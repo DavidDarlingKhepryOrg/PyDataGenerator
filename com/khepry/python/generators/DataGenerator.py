@@ -378,20 +378,26 @@ class Record:
 def main():
     
     properties = Properties()
-    properties.load(open("/home/khepry/home/distributions/PyDataGenerator/PyDataGenerator.properties"))
+    properties_file_path = "~/PycharmProjects/PyDataGenerator/PyDataGenerator.properties"
+    if properties_file_path.startswith('~'):
+        properties_file_path = os.path.expanduser(properties_file_path)
+    properties.load(open(properties_file_path))
     properties.list()
 
     maxRows = 100
     maxXlsRows = 10000
     
-    globalPath = '/home/khepry/home/distributions/PyDataGenerator/temp/'
+    globalPath = '/home/khepry/PyDataGenerator/temp/'
+    os.makedirs(globalPath, exist_ok=True)
+
     targetName = 'dataGenerator.csv'
 
-    maxRows = int(properties.getProperty('maxRows', maxRows))
-    maxXlsRows = int(properties.getProperty('maxXlsRows', maxXlsRows))
+    maxRows = int(properties.getProperty('maxRows'))
+    maxXlsRows = int(properties.getProperty('maxXlsRows'))
 
-    globalPath = properties.getProperty('globalPath', globalPath)
-    targetName = properties.getProperty('targetName', targetName)
+    globalPath = properties.getProperty('globalPath')
+    os.makedirs(globalPath, exist_ok=True)
+    targetName = properties.getProperty('targetName')
     
     print("-- operating system --")
     print(platform.system())
@@ -427,17 +433,16 @@ def main():
             record.addField("Range", "Range").random(12, 24)
             record.addField("Date", "Date").random(date(1980,1,1), date(2000,12,31))
             record.addField("DateTime", "DateTime").random(date(1980,1,1), date(2000,12,31))
-            record.addField("AgeInYears","Numeric").years(date.today(), record.getField("Date").value)
-            record.addField("AgeInMonths","Numeric").months(date.today(), record.getField("Date").value)
-            record.addField("AgeInDays","Numeric").days(date.today(), record.getField("Date").value)
+            record.addField("AgeInYears", "Numeric").years(date.today(), record.getField("Date").value)
+            record.addField("AgeInMonths", "Numeric").months(date.today(), record.getField("Date").value)
+            record.addField("AgeInDays", "Numeric").days(date.today(), record.getField("Date").value)
                 
-            if (i == 0):
+            if i == 0:
                 writer.writerow([key for key in record.fields.keys()])
             writer.writerow([field.text for field in record.fields.values()])
             
     finally:
         tgtFile.close()
-
 
     endTime = tyme.time()
 
