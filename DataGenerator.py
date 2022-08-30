@@ -1,9 +1,10 @@
-'''
+"""
 Created on Feb 19, 2014
 
 @author: David Darling <david.darling@khepry.com>
-'''
-#!/usr/bin/python
+"""
+
+# !/usr/bin/python
 
 import csv
 import os
@@ -31,114 +32,160 @@ class StringUtils:
     __numericChars = string.digits
     __hexDigits = string.hexdigits
 
-
     @staticmethod
-    def randomAlpha(minLength, maxLength, chars=None):
+    def random_alpha(min_length, max_length, chars=None, prefix=None, suffix=None):
         if not chars:
             chars = StringUtils.__alphabeticChars
-        length = random.randrange(minLength, maxLength)
-        return ''.join(random.choice(chars) for i in range(length))
+        length = random.randrange(min_length, max_length)
+        value = ''.join(random.choice(chars) for _ in range(length))
+        if prefix:
+            value = prefix + value
+        if suffix:
+            value = value + suffix
+        return value
 
     @staticmethod
-    def randomAlphaNumeric(minLength, maxLength, chars=None):
+    def random_alphanumeric(min_length, max_length, chars=None, prefix=None, suffix=None):
         if not chars:
             chars = StringUtils.__alphabeticChars.join(StringUtils.__numericChars)
-        length = random.randrange(minLength, maxLength)
-        return ''.join(random.choice(chars) for i in range(length))
+        length = random.randrange(min_length, max_length)
+        value = ''.join(random.choice(chars) for _ in range(length))
+        if prefix:
+            value = prefix + value
+        if suffix:
+            value = value + suffix
+        return value
 
     @staticmethod
-    def randomDate(minDate, maxDate):
-        minOrdinal = minDate.toordinal()
-        maxOrdinal = maxDate.toordinal()
-        ordinal = random.randrange(minOrdinal, maxOrdinal)
+    def random_date(min_date, max_date):
+        min_ordinal = min_date.toordinal()
+        max_ordinal = max_date.toordinal()
+        ordinal = random.randrange(min_ordinal, max_ordinal)
         return date.fromordinal(ordinal)
 
     @staticmethod
-    def randomDateTime(minDate, maxDate):
-        minOrdinal = minDate.toordinal()
-        maxOrdinal = maxDate.toordinal()
-        ordinal = random.randrange(minOrdinal, maxOrdinal)
-        tempDate = date.fromordinal(ordinal)
+    def random_datetime(min_date, max_date):
+        min_ordinal = min_date.toordinal()
+        max_ordinal = max_date.toordinal()
+        ordinal = random.randrange(min_ordinal, max_ordinal)
+        temp_date = date.fromordinal(ordinal)
         hour = random.randrange(0, 23)
         minute = random.randrange(0, 59)
         second = random.randrange(0, 59)
-        tempTime = time(hour, minute, second)
-        return datetime.combine(tempDate, tempTime)
+        temp_time = time(hour, minute, second)
+        return datetime.combine(temp_date, temp_time)
     
     @staticmethod
-    def randomNumeric(minLength, maxLength, chars=None):
+    def random_numeric(min_length, max_length, chars=None, prefix=None, suffix=None, decimal_places=0):
         if not chars:
             chars = StringUtils.__numericChars
-        length = random.randrange(minLength, maxLength)
-        return ''.join(random.choice(chars) for i in range(length))
+        length = random.randrange(min_length, max_length)
+        value = ''.join(random.choice(chars) for _ in range(length))
+        value = str(round(float(value), decimal_places))
+        if prefix:
+            value = prefix + value
+        if suffix:
+            value = value + suffix
+        return value
 
     @staticmethod
-    def randomRange(minValue, maxValue):
-        return random.randrange(minValue, maxValue)
-    
+    def random_range(min_value, max_value, prefix=None, suffix=None):
+        value = str(random.randrange(min_value, max_value))
+        if prefix:
+            value = prefix + value
+        if suffix:
+            value = value + suffix
+        return value
+
+    @staticmethod
+    def random_uniform(min_value, max_value, prefix=None, suffix=None, decimal_places=0):
+        value = round(random.uniform(min_value, max_value), decimal_places)
+        if prefix:
+            value = prefix + value
+        if suffix:
+            value = value + suffix
+        return value
+
 
 class Field:
 
-    def __init__(self, name=None, dataType=None, minValue=None, maxValue=None, value=None):
+    def __init__(self,
+                 name=None,
+                 data_type=None,
+                 min_value=None,
+                 max_value=None,
+                 value=None,
+                 prefix=None,
+                 suffix=None,
+                 decimal_places=0):
         self.message = ""
         self.valid = True
+        self.prefix = prefix
+        self.suffix = suffix
+        self.decimal_places = decimal_places
         if name:
             self.name = name
         else:
             self.name = ""
-        if dataType:
-            self.dataType = dataType
+        if data_type:
+            self.data_type = data_type
         else:
-            self.dataType = ""
-        if minValue:
-            self.minValue = minValue
+            self.data_type = ""
+        if min_value:
+            self.min_value = min_value
         else:
-            self.minValue = 5
-        if maxValue:
-            self.maxValue = maxValue
+            self.min_value = 5
+        if max_value:
+            self.max_value = max_value
         else:
-            self.maxValue = 10
+            self.max_value = 10
         if value:
             self.value = value
         else:
-            self.value = StringUtils.randomAlphaNumeric(self.minValue, self.maxValue)
+            self.value = StringUtils.random_alphanumeric(self.min_value,
+                                                         self.max_value,
+                                                         prefix=self.prefix,
+                                                         suffix=self.suffix)
         self.text = str(value)
     
-    def toString(self):
-        print ("Name: ", self.name, ", DataType: ", self.dataType, ", MinLength: ", self.minValue, ", MaxLength: ", self.maxValue, ", Value: ", self.value, ", Valid: ", self.valid)
+    def to_string(self):
+        print("name: ", self.name, ", data_type: ", self.data_type, ", min_length: ", self.min_value, ", max_length: ", self.max_value, ", value: ", self.value, ", valid: ", self.valid)
 
-    def random(self, minValue=None, maxValue=None, chars=None):
-        dataType = self.dataType.lower()
-        if not minValue:
-            minValue = self.minValue
-        if not maxValue:
-            maxValue = self.maxValue
-        if   dataType == "alpha":
-            self.value = StringUtils.randomAlpha(minValue, maxValue, chars)
+    def random(self, min_value=None, max_value=None, chars=None, prefix=None, suffix=None, decimal_places=0):
+        data_type = self.data_type.lower()
+        if not min_value:
+            min_value = self.min_value
+        if not max_value:
+            max_value = self.max_value
+        if data_type == "alpha":
+            self.value = StringUtils.random_alpha(min_value, max_value, chars, prefix, suffix)
             self.text = str(self.value)
-        elif dataType == "alphanumeric":
-            self.value = StringUtils.randomAlphaNumeric(minValue, maxValue, chars)            
+        elif data_type == "alphanumeric":
+            self.value = StringUtils.random_alphanumeric(min_value, max_value, chars, prefix, suffix)
             self.text = str(self.value)
-        elif dataType == "date":
-            self.value = StringUtils.randomDate(minValue, maxValue)            
+        elif data_type == "date":
+            self.value = StringUtils.random_date(min_value, max_value)
             self.text = str(self.value)
-        elif dataType == "datetime":
-            self.value = StringUtils.randomDateTime(minValue, maxValue)       
+        elif data_type == "datetime":
+            self.value = StringUtils.random_datetime(min_value, max_value)
             self.text = self.value.isoformat()
-        elif dataType == "numeric":
-            self.value = StringUtils.randomNumeric(minValue, maxValue, chars)
+        elif data_type == "numeric":
+            self.value = StringUtils.random_numeric(min_value, max_value, chars, prefix, suffix, decimal_places)
             self.text = str(self.value)
-        elif dataType == "range":
-            self.value = StringUtils.randomRange(minValue, maxValue)
+        elif data_type == "rangeint":
+            self.value = StringUtils.random_range(min_value, max_value, prefix, suffix)
             self.text = str(self.value)
-        elif dataType == "string":
-            self.value = StringUtils.randomAlphaNumeric(minValue, maxValue, chars)            
+        elif data_type == "rangefloat":
+            self.value = StringUtils.random_uniform(min_value, max_value, prefix, suffix, decimal_places)
             self.text = str(self.value)
-        elif dataType == "uuid4":
+        elif data_type == "string":
+            self.value = StringUtils.random_alphanumeric(min_value, max_value, chars, prefix, suffix)
+            self.text = str(self.value)
+        elif data_type == "uuid4":
             self.value = uuid.uuid4()            
             self.text = str(self.value)
         else:
-            self.value = StringUtils.randomAlphaNumeric(minValue, maxValue, chars)            
+            self.value = StringUtils.random_alphanumeric(min_value, max_value, chars, prefix, suffix)
             self.text = str(self.value)
         return self
 
@@ -173,7 +220,7 @@ class Field:
             self.text = str(self.value)
         return self
  
-    def endsWith(self, prefix, start=None, end=None):
+    def ends_with(self, prefix, start=None, end=None):
         if self.valid:
             self.value = self.value.endswith(prefix, start, end)
             self.text = str(self.value)
@@ -197,49 +244,49 @@ class Field:
             self.text = str(self.value)
         return self
    
-    def isAlphaNumeric(self):
+    def is_alphanumeric(self):
         if self.valid:
             self.valid = self.value.isalnum()
             if not self.valid:
                 self.message = "'{}'.isAlphaNumeric=FALSE".format(self.value)
         return self
     
-    def isAlpha(self):
+    def is_alpha(self):
         if self.valid:
             self.valid = self.value.isalpha()
             if not self.valid:
                 self.message = "'{}'.isAlpha=FALSE".format(self.value)
         return self
     
-    def isLower(self):
+    def is_lower(self):
         if self.valid:
             self.valid = self.value.islower()
             if not self.valid:
                 self.message = "'{}'.isLower=FALSE".format(self.value)
         return self
     
-    def isNumeric(self):
+    def is_numeric(self):
         if self.valid:
             self.valid = self.value.isdigit()
             if not self.valid:
                 self.message = "'{}'.isNumeric=FALSE".format(self.value)
         return self
     
-    def isSpace(self):
+    def is_space(self):
         if self.valid:
             self.valid = self.value.isspace()
             if not self.valid:
                 self.message = "'{}'.isSpace=FALSE".format(self.value)
         return self
     
-    def isTitle(self):
+    def is_title(self):
         if self.valid:
             self.valid = self.value.istitle()
             if not self.valid:
                 self.message = "'{}'.isTitle=FALSE".format(self.value)
         return self
     
-    def isUpper(self):
+    def is_upper(self):
         if self.valid:
             self.valid = self.value.isupper()
             if not self.valid:
@@ -277,6 +324,12 @@ class Field:
             self.text = str(self.value)
         return self
 
+    def random_from_list(self, list_values: list):
+        if self.valid:
+            self.value = random.choice(list_values)
+            self.text = str(self.value)
+        return self
+
     def replace(self, old, new, count=None):
         if self.valid:
             self.value = self.value.replace(old, new, count)
@@ -295,7 +348,7 @@ class Field:
             self.text = str(self.value)
         return self
 
-    def startswith(self, prefix, start=None, end=None):
+    def starts_with(self, prefix, start=None, end=None):
         if self.valid:
             self.value = self.value.startswith(prefix, start, end)
             self.text = str(self.value)
@@ -353,26 +406,79 @@ class Record:
     def __init__(self):
         self.fields.clear()
         
-    def addField(self, name, dataType=None, minLength=None, maxLength=None, value=None):
-        field = Field(name, dataType, minLength, maxLength, value)
+    def add_field(self,
+                  name,
+                  data_type=None,
+                  min_value=None,
+                  max_value=None,
+                  value=None,
+                  prefix=None,
+                  suffix=None,
+                  decimal_places=2):
+        field = Field(name, data_type, min_value, max_value, value, prefix, suffix, decimal_places)
         self.fields[name] = field
         return field
 
-    def getField(self, name):
+    def get_field(self, name):
         field = self.fields.get(name)
         return field
 
-    def toCsvHeader(self, colSeparator):
+    def to_csv_header(self, col_separator=','):
         # join the field values together, removing the last colSeparator when finished
-        return "".join([field.name + colSeparator for field in self.fields.values()])[:-1]
+        return "".join([field.name + col_separator for field in self.fields.values()])[:-1]
     
-    def toCsvValues(self, colSeparator):
+    def to_csv_values(self, col_separator=','):
         # join the field values together, removing the last colSeparator when finished
-        return "".join([field.text + colSeparator for field in self.fields.values()])[:-1]
+        return "".join([field.text + col_separator for field in self.fields.values()])[:-1]
 
-    def toString(self):
+    def to_string(self):
         for elem in self.fields.values():
             elem.toString()
+
+
+class XampleRecord(Record):
+    def __init__(self):
+        super().__init__()
+        record = Record()
+        record.add_field("UUID4", "UUID4").random()
+        record.add_field("Alpha", "Alpha").random(20, 25)
+        record.add_field("AlphaNumeric", "AlphaNumeric").random()
+        record.add_field("Numeric", "Numeric").random()
+        record.add_field("String", "String").random()
+        record.add_field("Range", "Range").random(12, 24)
+        record.add_field("Date", "Date").random(date(1980, 1, 1), date(2000, 12, 31))
+        record.add_field("DateTime", "DateTime").random(date(1980, 1, 1), date(2000, 12, 31))
+        record.add_field("AgeInYears", "Numeric").years(date.today(), record.get_field("Date").value)
+        record.add_field("AgeInMonths", "Numeric").months(date.today(), record.get_field("Date").value)
+        record.add_field("AgeInDays", "Numeric").days(date.today(), record.get_field("Date").value)
+
+
+class NventoryRecord(Record):
+    def __init__(self):
+        super().__init__()
+        record = Record()
+        record.add_field("inventory_id", "AlphaNumeric").random(5, 10, prefix="LG")
+        record.add_field("producer", "Alpha").random_from_list(['ab', 'fx', 'gr', 'mg', 'wd'])
+        record.add_field("grading_lab_code", "Alpha").random_from_list(['GCAL', 'IGI'])
+        record.add_field("grading_lab_report_id", "AlphaNumeric").random(10, 15)
+        record.add_field("stone_type_code", "Alpha").random_from_list(['LabGrown', 'Lab Grown', 'LAB GROWN'])
+        record.add_field("production_location", "AlphaNumeric").random_from_list(['ND', 'Surat', 'WD_Maryland', 'Nesher Israel'])
+        record.add_field("production_date", "Date").random(date(2010, 1, 1), date.today())
+        record.add_field("date_of_shipping_from_producer", "Date").random(date(2010, 1, 1), date.today())
+        record.add_field("carat_wt_pregraded", "RangeFloat").random(1, 15, decimal_places=2)
+        record.add_field("shape_code_pregraded", "AlphaNumber").random(2, 10)
+        record.add_field("measure_1_pregraded", "RangeFloat").random(1, 10, decimal_places=2)
+        record.add_field("measure_2_pregraded", "RangeFloat").random(1, 10, decimal_places=2)
+        record.add_field("measure_3_pregraded", "RangeFloat").random(1, 10, decimal_places=2)
+        record.add_field("cutter_code", "AlphaNumeric").random_from_list(['Self', 'ABC', 'DEF'])
+        record.add_field("cutter_location_code", "AlphaNumeric").random_from_list(['Self', 'ABC', 'DEF'])
+        record.add_field("date_of_receipt_at_cutter", "Date").random(date(2010, 1, 1), date.today())
+        record.add_field("date_of_shipping_from_cutter", "Date").random(date(2010, 1, 1), date.today())
+        record.add_field("mother_stone_id", "AlphaNumeric").random(5, 10)
+        record.add_field("mother_stone_carat_wt_as_grown", "RangeFloat").random(0.5, 15, decimal_places=2)
+        record.add_field("mother_stone_carat_wt_as_cored", "RangeFloat").random(0.5, 15, decimal_places=2)
+        record.add_field("mother_stone_machine_id", "AlphaNumeric").random(5, 10)
+        record.add_field("soft_deleted", "Alpha").random_from_list(['false', 'true'])
 
 
 def main():
@@ -384,20 +490,15 @@ def main():
     properties.load(open(properties_file_path))
     properties.list()
 
-    maxRows = 100
-    maxXlsRows = 10000
-    
-    globalPath = '/home/khepry/PyDataGenerator/temp/'
-    os.makedirs(globalPath, exist_ok=True)
+    global_path = '/home/khepry/PyDataGenerator/temp/'
+    os.makedirs(global_path, exist_ok=True)
 
-    targetName = 'dataGenerator.csv'
+    max_rows = int(properties.getProperty('max_rows'))
+    max_xls_rows = int(properties.getProperty('max_xls_rows'))
 
-    maxRows = int(properties.getProperty('maxRows'))
-    maxXlsRows = int(properties.getProperty('maxXlsRows'))
-
-    globalPath = properties.getProperty('globalPath')
-    os.makedirs(globalPath, exist_ok=True)
-    targetName = properties.getProperty('targetName')
+    global_path = properties.getProperty('global_path')
+    os.makedirs(global_path, exist_ok=True)
+    target_name = properties.getProperty('target_name')
     
     print("-- operating system --")
     print(platform.system())
@@ -405,65 +506,56 @@ def main():
     print("-- processing messages --")
     
     if platform.system() == 'Windows':
-        xlsPgmPath = '"/Program Files/Microsoft Office 15/root/office15/EXCEL.EXE"'
-        txtPgmPath = '"/Program Files (x86)/Notepad++/notepad++.exe"'
+        xls_pgm_path = '"/Program Files/Microsoft Office 15/root/office15/EXCEL.EXE"'
+        txt_pgm_path = '"/Program Files (x86)/Notepad++/notepad++.exe"'
     else:
-        xlsPgmPath = "libreoffice"
-        txtPgmPath = "gedit"
+        xls_pgm_path = "libreoffice"
+        txt_pgm_path = "gedit"
     
-    tgtFileFullPath = os.path.abspath(globalPath + targetName)
-    tgtFile = open(tgtFileFullPath, 'w', newline='')
+    tgt_file_full_path = os.path.abspath(global_path + target_name)
+    tgt_file = open(tgt_file_full_path, 'w', newline='')
 
-    bgnTime = tyme.time()
+    bgn_time = tyme.time()
 
     rows = 0
     
     try:
-        writer = csv.writer(tgtFile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer = csv.writer(tgt_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-        for i in range(0, maxRows):
+        for i in range(0, max_rows):
             rows += 1
 
-            # TODO: Tweak static/validate_csv_templates as needed
-            # TODO: Soft-code the following "record" using a YAML file
+            # DONE: Modify methods and variables for PEP-8 compliance
+            # DONE: Tweak static/validate_csv_templates as needed
+            # DONE: Add prefix, suffix, and decimal_places logic to field values
+            # TODO: Tweak the following "record" using additional Record classes
             # TODO: Convert PyDataGenerator.properties to ENV file
 
-            record = Record()
-            record.addField("UUID4", "UUID4").random()
-            record.addField("Alpha", "Alpha").random(20, 25)
-            record.addField("AlphaNumeric", "AlphaNumeric").random()
-            record.addField("Numeric", "Numeric").random()
-            record.addField("String", "String").random()
-            record.addField("Range", "Range").random(12, 24)
-            record.addField("Date", "Date").random(date(1980,1,1), date(2000,12,31))
-            record.addField("DateTime", "DateTime").random(date(1980,1,1), date(2000,12,31))
-            record.addField("AgeInYears", "Numeric").years(date.today(), record.getField("Date").value)
-            record.addField("AgeInMonths", "Numeric").months(date.today(), record.getField("Date").value)
-            record.addField("AgeInDays", "Numeric").days(date.today(), record.getField("Date").value)
-                
+            record = NventoryRecord()
+
             if i == 0:
                 writer.writerow([key for key in record.fields.keys()])
             writer.writerow([field.text for field in record.fields.values()])
             
     finally:
-        tgtFile.close()
+        tgt_file.close()
 
-    endTime = tyme.time()
+    end_time = tyme.time()
 
-    elapsedTime = endTime - bgnTime
+    elapsed_time = end_time - bgn_time
 
-    print("{:,}".format(rows) + ' records processed in ' + "{:,.4f}".format(elapsedTime) + ' seconds at ' + "{:,.4f}".format(rows / elapsedTime) + ' rows/second.')
+    print("{:,}".format(rows) + ' records processed in ' + "{:,.4f}".format(elapsed_time) + ' seconds at ' + "{:,.4f}".format(rows / elapsed_time) + ' rows/second.')
 
-    if (platform.system() == 'Windows'):
-        if (rows < maxXlsRows):
-            subprocess.call(xlsPgmPath + ' "' + tgtFileFullPath + '"')
+    if platform.system() == 'Windows':
+        if rows < max_xls_rows:
+            subprocess.call(xls_pgm_path + ' "' + tgt_file_full_path + '"')
         else:
-            subprocess.call(txtPgmPath + ' "' + tgtFileFullPath + '"')
+            subprocess.call(txt_pgm_path + ' "' + tgt_file_full_path + '"')
     else:
-        if (rows < maxXlsRows):
-            subprocess.call([xlsPgmPath, tgtFileFullPath])
+        if rows < max_xls_rows:
+            subprocess.call([xls_pgm_path, tgt_file_full_path])
         else:
-            subprocess.call([txtPgmPath, tgtFileFullPath])
+            subprocess.call([txt_pgm_path, tgt_file_full_path])
 
 
 if __name__ == '__main__':

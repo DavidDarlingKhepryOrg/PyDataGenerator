@@ -1,2 +1,2 @@
 ﻿jewelry_serial_no,jewelry_producer,jewelry_grading_lab_code,jewelry_grading_lab_report_id,jewelry_type,jewelry_description,jewelry_production_location_code,jewelry_production_date,primary_metal,stone_report_ids,melee_packet_ids,total_carat_wt,total_ungraded_wt,ungraded_stones_count,graded_stones_count,soft_deleted
-EX234567,ex,GLCODE,876543,Earrings,Medium diamond yellow gold studs,SCS_California,2022-01-13,gold,"GLCODE: 987654, GLCODE: 109876",,1.2,0,0,2,FALSE
+EX234567,ex,IGI,876543,Earrings,Medium diamond yellow gold studs,SCS_RD,2022-01-13,gold,"IGI:987654,GCAL:109876",,1.2,0,0,2,false

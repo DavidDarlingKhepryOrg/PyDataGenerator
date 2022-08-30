@@ -1,8 +1,8 @@
-﻿inventory_id,producer,grading_lab_code,grading_lab_report_id,stone_type_code,production_location,production_date,date_of_shipping_from_producer,carat_wt_pregraded,shape_code_pregraded,cutter_code,cutter_location_code,date_of_receipt_at_cutter,date_of_shipping_from_cutter,mother_stone_id,mother_stone_carat_wt_as_grown,mother_stone_carat_wt_as_cored,mother_stone_machine_id,soft_deleted
-EX123456,ex,GLCODE,765432,LabGrown,SCS_California,1/31/2022,2/5/2022,0.81,EM,Self,SCS_California,2022-02-29,3/13/2022,112233,2.21,2.11,3333X567,FALSE
-EX123456,,GLCODE,765432,,,,,,,,,,,,,,,
-,ex,GLCODE,765432,LabGrown,SCS_California,1/31/2022,2/5/2022,0.81,EM,Self,SCS_California,2022-02-29,3/13/2022,112233,2.21,2.11,3333X567,FALSE
-EX123456,ex,GLCODE,765432,LabGrown,SCS_California,1/31/2022,2/5/2022,aa,EM,Self,SCS_California,2022-02-29,3/13/2022,112233,2.21,2.11,3333X567,FALSE
-EX123456,ex,GLCODE,765432,LabGrown,SCS_California,1/31/2022,2/5/2022,aa,EM,Self,SCS_California,2022-02-29,3/13/2022,bb,2.21,2.11,3333X567,FALSE
-EX123456,ex,GLCODE,765432,LabGrown,SCS_California,1/31/2022,2/5/2022,aa,EM,Self,SCS_California,2022-02-29,3/13/2022,112233,cc,2.11,3333X567,FALSE
-EX123456,ex,GLCODE,765432,LabGrown,SCS_California,1/31/2022,2/5/2022,aa,EM,Self,SCS_California,2022-02-29,3/13/2022,112233,cc,dd,3333X567,FALSE
+﻿inventory_id,producer,grading_lab_code,grading_lab_report_id,stone_type_code,production_location,production_date,date_of_shipping_from_producer,carat_wt_pregraded,shape_code_pregraded,measure_1_pregraded,measure_2_pregraded,measure_3_pregraded,cutter_code,cutter_location_code,date_of_receipt_at_cutter,date_of_shipping_from_cutter,mother_stone_id,mother_stone_carat_wt_as_grown,mother_stone_carat_wt_as_cored,mother_stone_machine_id,soft_deleted
+EX123456,ex,IGI,765432,LabGrown,SCS_RD,2022-01-31,2022-02-05,0.81,EM,1,2,3,Self,SCS_RD,2022-02-29,2022-03-13,112233,2.21,2.11,3333X567,false
+EX123456,,GCAL,765432,,,,,,,,,,,,,,,,,,
+,ex,IGI,765432,LabGrown,SCS_RD,2022-01-31,2022-02-05,0.81,EM,1,2,3,Self,SCS_RD,2022-02-29,2022-03-13,112233,2.21,2.11,3333X567,false
+EX123456,ex,GCAL,765432,LabGrown,SCS_RD,2022-01-31,2022-02-05,aa,EM,1,2,3,Self,SCS_RD,2022-02-29,2022-03-13,112233,2.21,2.11,3333X567,false
+EX123456,ex,IGI,765432,LabGrown,SCS_RD,2022-01-31,2022-02-05,aa,EM,1,2,3,Self,SCS_RD,2022-02-29,2022-03-13,bb,2.21,2.11,3333X567,false
+EX123456,ex,GCAL,765432,LabGrown,SCS_RD,2022-01-31,2022-02-05,aa,EM,1,2,3,Self,SCS_RD,2022-02-29,2022-03-13,112233,cc,2.11,3333X567,false
+EX123456,ex,IGI,765432,LabGrown,SCS_RD,2022-01-31,2022-02-05,aa,EM,1,2,3,Self,SCS_RD,2022-02-29,2022-03-13,112233,cc,dd,3333X567,false
