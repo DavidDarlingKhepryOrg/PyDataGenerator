@@ -466,6 +466,7 @@ class NventoryRecord(Record):
         record.add_field("producer", "Alpha").random_from_list(['ab', 'fx', 'gr', 'mg', 'wd', 'xx'])
         record.add_field("grading_lab_code", "Alpha").random_from_list(['GCAL', 'IGI'])
         record.add_field("grading_lab_report_id", "AlphaNumeric").random(10, 15)
+        record.add_field("grading_lab_report_date", "Date").random(date(2010, 1, 1), date.today())
         record.add_field("stone_type_code", "Alpha").random_from_list(['LabGrown', 'Lab Grown', 'LAB GROWN'])
         record.add_field("production_location", "AlphaNumeric").random_from_list(['ND', 'Surat', 'WD_Maryland', 'Nesher Israel', 'SCS-RD'])
         record.add_field("production_date", "Date").random(date(2010, 1, 1), date.today())
