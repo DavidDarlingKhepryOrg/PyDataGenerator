@@ -149,7 +149,12 @@ class Field:
         self.text = str(value)
     
     def to_string(self):
-        print("name: ", self.name, ", data_type: ", self.data_type, ", min_length: ", self.min_value, ", max_length: ", self.max_value, ", value: ", self.value, ", valid: ", self.valid)
+        print("name: ", self.name,
+              ", data_type: ", self.data_type,
+              ", min_length: ", self.min_value,
+              ", max_length: ", self.max_value,
+              ", value: ", self.value,
+              ", valid: ", self.valid)
 
     def random(self, min_value=None, max_value=None, chars=None, prefix=None, suffix=None, decimal_places=0):
         data_type = self.data_type.lower()
@@ -458,11 +463,11 @@ class NventoryRecord(Record):
         super().__init__()
         record = Record()
         record.add_field("inventory_id", "AlphaNumeric").random(5, 10, prefix="LG")
-        record.add_field("producer", "Alpha").random_from_list(['ab', 'fx', 'gr', 'mg', 'wd'])
+        record.add_field("producer", "Alpha").random_from_list(['ab', 'fx', 'gr', 'mg', 'wd', 'xx'])
         record.add_field("grading_lab_code", "Alpha").random_from_list(['GCAL', 'IGI'])
         record.add_field("grading_lab_report_id", "AlphaNumeric").random(10, 15)
         record.add_field("stone_type_code", "Alpha").random_from_list(['LabGrown', 'Lab Grown', 'LAB GROWN'])
-        record.add_field("production_location", "AlphaNumeric").random_from_list(['ND', 'Surat', 'WD_Maryland', 'Nesher Israel'])
+        record.add_field("production_location", "AlphaNumeric").random_from_list(['ND', 'Surat', 'WD_Maryland', 'Nesher Israel', 'SCS-RD'])
         record.add_field("production_date", "Date").random(date(2010, 1, 1), date.today())
         record.add_field("date_of_shipping_from_producer", "Date").random(date(2010, 1, 1), date.today())
         record.add_field("carat_wt_pregraded", "RangeFloat").random(1, 15, decimal_places=2)
